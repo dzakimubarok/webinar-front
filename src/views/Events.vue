@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="Events">
     <v-app>
       <TopNavbar />
@@ -35,6 +35,9 @@ import { mapState } from "vuex";
 
 export default {
   name: "Events",
+  data: () => ({
+    offsetTop: 0,
+  }),
   components: {
     TopNavbar,
     Header,
