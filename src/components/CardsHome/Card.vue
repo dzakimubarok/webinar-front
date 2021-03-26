@@ -6,7 +6,7 @@
       :src="eventImage"
     ></v-img>
     <v-card-text>
-      <p color="deep-purple accent-4">
+      <p>
         {{ formatDate(eventStart) }}
       </p>
       <p class="display-1 text--primary">{{ eventName }}</p>
