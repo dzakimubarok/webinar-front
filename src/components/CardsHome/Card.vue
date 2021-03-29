@@ -5,11 +5,16 @@
       height="280px"
       :src="eventImage"
     ></v-img>
+
     <v-card-text>
       <p>
         {{ formatDate(eventStart) }}
       </p>
-      <p class="display-1 text--primary">{{ eventName }}</p>
+      <div class="display-1 text--primary">
+        <router-link v-bind:to="'/detail/' + eventId" class="nav-link">
+          {{ eventName }}
+        </router-link>
+      </div>
 
       <div class="text--primary">{{ eventDescription }}</div>
     </v-card-text>
@@ -21,9 +26,10 @@
 
 <script>
 export default {
-  props: ["name", "description", "image", "quota", "eventStart"],
+  props: ["id", "name", "description", "image", "quota", "eventStart"],
   data() {
     return {
+      eventId: this.id,
       eventImage: this.image,
       eventName: this.name,
       eventDescription: this.description,
@@ -46,3 +52,10 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+#div {
+  text-decoration: none;
+}
+</style>

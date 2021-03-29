@@ -5,11 +5,19 @@
       <v-main>
         <Header />
         <!-- <EventHome /> -->
+
         <v-row>
           <v-col sm="10" offset-sm="1" md="8" offset-md="2">
             <v-row>
-              <v-col sm="6" md="4" v-for="event in events" :key="event.id">
+              <v-col
+                sm="6"
+                md="4"
+                v-for="event in events"
+                :key="event.id"
+                class="EventDetail"
+              >
                 <Card
+                  :id="event.id"
                   :name="event.name"
                   :image="event.image"
                   :description="event.description"

@@ -107,6 +107,11 @@ import Footer from "../components/CardsHome/Footer";
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      id: this.$route.params.id,
+    };
+  },
   components: {
     TopNavbar,
     Footer,
@@ -116,7 +121,7 @@ export default {
     ...mapState("events", ["event"]),
   },
   mounted() {
-    this.$store.dispatch("events/getPostID", this.$route.params.id);
+    this.$store.dispatch("events/getPostID", this.id);
   },
   methods: {
     formatDate(date) {

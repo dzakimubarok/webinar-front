@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-app-bar>
-      <v-toolbar-title>WEBINAR INDONESIA</v-toolbar-title>
+      <router-link v-bind:to="'/'">
+        <v-toolbar-title>WEBINAR INDONESIA</v-toolbar-title>
+      </router-link>
 
       <v-spacer> </v-spacer>
 
@@ -13,12 +15,12 @@
         <v-btn>
           <font-awesome-icon icon="sign-in-alt" class="small" /> LOGIN</v-btn
         >
-        <v-btn>
+        <!-- <v-btn>
           <font-awesome-icon icon="sign-in-alt" class="small" />LOGIN</v-btn
         >
         <v-btn>
           <font-awesome-icon icon="sign-in-alt" class="small" />LOGIN</v-btn
-        >
+        > -->
       </v-toolbar-items>
     </v-app-bar>
 
