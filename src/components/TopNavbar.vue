@@ -1,9 +1,11 @@
 <template>
   <div>
     <v-app-bar>
-      <router-link v-bind:to="'/'">
-        <v-toolbar-title>WEBINAR INDONESIA</v-toolbar-title>
-      </router-link>
+      <!-- <v-toolbar-title
+        ><router-link v-bind:to="'/'" class="navbar-brand"
+          >WEBINAR INDONESIA
+        </router-link></v-toolbar-title
+      > -->
 
       <v-spacer> </v-spacer>
 
@@ -12,7 +14,7 @@
       </span>
 
       <v-toolbar-items class="hidden-xs-only">
-        <v-btn>
+        <v-btn to="/login">
           <font-awesome-icon icon="sign-in-alt" class="small" /> LOGIN</v-btn
         >
         <!-- <v-btn>
