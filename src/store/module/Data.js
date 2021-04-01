@@ -1,4 +1,5 @@
 import EventService from '../../services/Event.services'
+import AuthService from '../../services/auth.services'
 
 const user = JSON.parse(localStorage.getItem('user'));
 const initialState = user
@@ -10,7 +11,7 @@ const events = {
   state: {
     events: [],
     event: {},
-    initialState
+    initialState: initialState
   },
 
   mutations: {
@@ -28,6 +29,16 @@ const events = {
       state.status.loggedIn = false;
       state.user = null;
     },
+    logout(state) {
+      state.status.loggedIn = false;
+      state.user = null
+    },
+    registerSuccess(state) {
+      state.status.loggedIn = false;
+    },
+    registerFailure(state) {
+      state.status.loggedIn = false;
+    }
   },
 
   actions: {
@@ -46,7 +57,7 @@ const events = {
         .catch(error => console.log(error))
     },
     login({ commit }, user) {
-      return EventService.login(user).then(
+      return AuthService.login(user).then(
         user => {
           commit('loginSuccess', user);
           return Promise.resolve(user);
@@ -58,9 +69,21 @@ const events = {
       );
     },
     logout({ commit }) {
-      EventService.logout();
+      AuthService.logout();
       commit('logout');
     },
+    register({ commit }, user) {
+      return AuthService.register(user).then(
+        response => {
+          commit('registerSuccess');
+          return Promise.resolve(response.data)
+        },
+        error => {
+          commit('registrasiFailure');
+          return Promise.reject(error)
+        }
+      )
+    }
   }
 }
-export default events 
+export default events

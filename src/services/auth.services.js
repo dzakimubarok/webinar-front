@@ -1,13 +1,13 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3000/api/event/'
+const API_URL = 'http://localhost:3000/api/auth/'
 
 class AuthService {
-  login(user) {
-    return axios
-      .post(API_URL + 'signin', {
-        username: user.username,
-        passsword: user.passsword
+  async login(user) {
+    await axios
+      .post(API_URL + 'login', {
+        email: user.email,
+        password: user.password
       })
       .then(response => {
         if (response.data.accessToken) {
@@ -15,7 +15,10 @@ class AuthService {
         }
 
         return response.data;
-      });
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   logout() {

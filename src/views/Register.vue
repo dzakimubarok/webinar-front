@@ -5,7 +5,7 @@
         <v-row align="center" justify="center">
           <v-col cols="12" md="8" sm="8">
             <v-card elevation="12">
-              <v-window v-model="step">
+              <v-window>
                 <v-window-item :value="2">
                   <v-row class="fill-height">
                     <v-col cols="12" md="4" class="teal accent-3">
@@ -43,8 +43,9 @@
                         <h4 class="text-center mt-4">
                           Ensure your email for registration
                         </h4>
-                        <v-form>
+                        <v-form @submit.prevent="handleRegister">
                           <v-text-field
+                            v-model="user.username"
                             label="Username"
                             name="Username"
                             prepend-icon="mdi-account"
@@ -52,6 +53,7 @@
                             color="teal accent-3"
                           />
                           <v-text-field
+                            v-model="user.email"
                             label="Email"
                             name="Email"
                             prepend-icon="mdi-email "
@@ -59,6 +61,7 @@
                             color="teal accent-3"
                           />
                           <v-text-field
+                            v-model="user.password"
                             label="Password"
                             name="Password"
                             prepend-icon="mdi-lock "
@@ -85,7 +88,47 @@
 </template>
 
 <script>
+import User from "../models/user";
 export default {
   name: "Register",
+  data() {
+    return {
+      user: new User("", "", ""),
+      submitted: false,
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.events.initialState.status.loggedIn;
+    },
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push("/profile");
+    }
+  },
+  methods: {
+    handleRegister() {
+      this.message = "";
+      this.submitted = true;
+      this.$validator.validate().then((isValid) => {
+        if (isValid) {
+          this.$store.dispatch("auth/register", this.user).then(
+            (data) => {
+              this.message = data.message;
+              this.successful = true;
+            },
+            (error) => {
+              this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+              this.successful = false;
+            }
+          );
+        }
+      });
+    },
+  },
 };
 </script>

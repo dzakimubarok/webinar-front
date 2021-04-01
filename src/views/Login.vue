@@ -29,38 +29,38 @@
                         <h4 class="text-center mlt-4">
                           Ensure your email for registration
                         </h4>
-                        <v-form @submit.prevent="handlelogin">
+                        <v-form id="login-form" name="form">
                           <v-text-field
-                            v-model="user.email"
-                            v-validate="'required'"
                             label="Email"
                             name="Email"
+                            v-model="user.email"
                             prepend-icon="mdi-email"
                             type="text"
                             color="teal accent-3"
                           />
                           <v-text-field
-                            v-model="user.password"
-                            v-validate="'required'"
                             label="password"
                             name="password"
+                            v-model="user.password"
                             prepend-icon="mdi-lock"
                             type="password"
                             color="teal accent-3"
                           />
+                          <h3 class="text-center mt-3">Forget your password</h3>
+                          <div class="text-center mt-3 mb-3">
+                            <v-btn
+                              rounded
+                              color="teal accent-3"
+                              dark
+                              :disabled="loading"
+                              form="login-form"
+                              @click.prevent="handleLogin"
+                              ><span v-show="loading"></span>
+                              <span>SignIn</span></v-btn
+                            >
+                          </div>
                         </v-form>
-                        <h3 class="text-center mt-3">Forget your password</h3>
                       </v-card-text>
-                      <div class="text-center mt-3 mb-3">
-                        <v-btn
-                          rounded
-                          color="teal accent-3"
-                          dark
-                          :disabled="loading"
-                          ><span v-show="loading"></span>
-                          <span>SignIn</span></v-btn
-                        >
-                      </div>
                     </v-col>
                     <v-col cols="12" md="4" class="teal accent-4">
                       <v-card-text class="white--text mt-12">
@@ -99,38 +99,31 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+      return this.$store.state.events.initialState.status.loggedIn;
     },
   },
   created() {
     if (this.loggedIn) {
-      this.router.push("/profile");
+      this.$router.push("/profile");
     }
   },
   methods: {
     handleLogin() {
-      this.loading = true;
-      this.$validator.validateAll().then((isValid) => {
-        if (isValid) {
-          this.loading = false;
-          return;
-        }
-
-        if (this.user.username && this.user.password) {
-          this.$store.dispatch("auth/login", this.user).then(
-            () => {
-              this.$router.push("/profile");
-            },
-            (error) => {
-              this.loading = false;
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            }
-          );
-        }
-      });
+      console.log(this.user);
+      if (this.user.email && this.user.password) {
+        this.$store.dispatch("events/login", this.user).then(
+          () => {
+            this.$router.push("/profile");
+          },
+          (error) => {
+            this.loading = false;
+            this.message =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
+          }
+        );
+      }
     },
   },
 };
