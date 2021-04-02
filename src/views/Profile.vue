@@ -1,16 +1,15 @@
 <template>
-  <div>LOGOUT</div>
+  <div class="Profile">
+    <TopNavbar />
+  </div>
 </template>
  
 <script>
+import TopNavbar from "../components/TopNavbar";
+
 export default {
-  data: () => ({
-    user: null,
-    result: null,
-    errors: null,
-  }),
-  mounted: function () {
-    this.user = this.$store.state.user;
+  components: {
+    TopNavbar,
   },
 };
 </script>

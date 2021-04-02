@@ -22,22 +22,22 @@ const events = {
       state.event = data
     },
     loginSuccess(state, user) {
-      state.status.loggedIn = true;
-      state.user = user;
+      state.initialState.status.loggedIn = true;
+      state.initialState.user = user;
     },
     loginFailure(state) {
-      state.status.loggedIn = false;
-      state.user = null;
+      state.initialState.status.loggedIn = false;
+      state.initialState.user = null;
     },
     logout(state) {
-      state.status.loggedIn = false;
-      state.user = null
+      state.initialState.status.loggedIn = false;
+      state.initialState.user = null
     },
     registerSuccess(state) {
-      state.status.loggedIn = false;
+      state.initialState.status.loggedIn = false;
     },
     registerFailure(state) {
-      state.status.loggedIn = false;
+      state.initialState.status.loggedIn = false;
     }
   },
 
@@ -79,7 +79,7 @@ const events = {
           return Promise.resolve(response.data)
         },
         error => {
-          commit('registrasiFailure');
+          commit('registerFailure');
           return Promise.reject(error)
         }
       )

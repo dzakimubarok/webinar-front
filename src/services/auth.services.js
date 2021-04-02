@@ -16,21 +16,20 @@ class AuthService {
 
         return response.data;
       })
-      .catch(err => {
-        console.log(err)
-      })
   }
 
-  logout() {
-    localStorage.removeItem('user')
+  async logout() {
+    await localStorage.removeItem('user')
   }
 
-  register(user) {
-    return axios.post(API_URL + 'signup', {
-      username: user.username,
-      email: user.email,
-      passsword: user.passsword
-    });
+  async register(user) {
+    console.log(user)
+    await axios
+      .post(API_URL + 'signup', {
+        username: user.username,
+        email: user.email,
+        password: user.password
+      });
   }
 }
 

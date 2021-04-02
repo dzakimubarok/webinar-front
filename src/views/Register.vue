@@ -43,38 +43,47 @@
                         <h4 class="text-center mt-4">
                           Ensure your email for registration
                         </h4>
-                        <v-form @submit.prevent="handleRegister">
+                        <v-form id="signup-form" name="form">
                           <v-text-field
-                            v-model="user.username"
                             label="Username"
                             name="Username"
+                            v-model="user.username"
+                            v-validate="'required|min:3|max:50'"
                             prepend-icon="mdi-account"
                             type="text"
                             color="teal accent-3"
                           />
                           <v-text-field
-                            v-model="user.email"
                             label="Email"
                             name="Email"
+                            v-model="user.email"
+                            v-validate="'required|email|max:50'"
                             prepend-icon="mdi-email "
                             type="Email"
                             color="teal accent-3"
                           />
                           <v-text-field
-                            v-model="user.password"
                             label="Password"
                             name="Password"
+                            v-model="user.password"
+                            v-validate="'required|min:6|max:40'"
                             prepend-icon="mdi-lock "
                             type="Password"
                             color="teal accent-3"
                           />
+                          <div class="text-center mb-2">
+                            <v-btn
+                              rounded
+                              color="teal accent-3"
+                              dark
+                              form="signup-form"
+                              @click.prevent="handleRegister"
+                            >
+                              SIGN UP</v-btn
+                            >
+                          </div>
                         </v-form>
                       </v-card-text>
-                      <div class="text-center mb-2">
-                        <v-btn rounded color="teal accent-3" dark
-                          >SIGN UP</v-btn
-                        >
-                      </div>
                     </v-col>
                   </v-row>
                 </v-window-item>
@@ -89,31 +98,34 @@
 
 <script>
 import User from "../models/user";
+
 export default {
   name: "Register",
   data() {
     return {
       user: new User("", "", ""),
-      submitted: false,
     };
   },
   computed: {
     loggedIn() {
+      console.log("loggedIn");
+
       return this.$store.state.events.initialState.status.loggedIn;
     },
   },
+
   mounted() {
     if (this.loggedIn) {
       this.$router.push("/profile");
     }
   },
+
   methods: {
     handleRegister() {
-      this.message = "";
       this.submitted = true;
       this.$validator.validate().then((isValid) => {
         if (isValid) {
-          this.$store.dispatch("auth/register", this.user).then(
+          this.$store.dispatch("events/register", this.user).then(
             (data) => {
               this.message = data.message;
               this.successful = true;

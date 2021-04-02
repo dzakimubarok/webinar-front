@@ -1,11 +1,7 @@
 <template>
   <div>
-    <v-app-bar>
-      <!-- <v-toolbar-title
-        ><router-link v-bind:to="'/'" class="navbar-brand"
-          >WEBINAR INDONESIA
-        </router-link></v-toolbar-title
-      > -->
+    <v-app-bar color="deep-purple accent-4">
+      <v-toolbar-title class="white--text"> WEBINAR INDONESIA </v-toolbar-title>
 
       <v-spacer> </v-spacer>
 
@@ -13,16 +9,21 @@
         <v-btn @click.stop="drawer = !drawer">MENU</v-btn>
       </span>
 
-      <v-toolbar-items class="hidden-xs-only">
-        <v-btn to="/login">
-          <font-awesome-icon icon="sign-in-alt" class="small" /> LOGIN</v-btn
+      <v-toolbar-items class="hidden-xs-only" v-if="!user">
+        <v-btn to="/login" color="deep-purple accent-4 white--text">
+          <font-awesome-icon icon="sign-in-alt" class="small" />login</v-btn
         >
-        <!-- <v-btn>
-          <font-awesome-icon icon="sign-in-alt" class="small" />LOGIN</v-btn
+        <v-btn to="/register" color="deep-purple accent-4 white--text">
+          <font-awesome-icon icon="sign-in-alt" class="small" />signup</v-btn
         >
-        <v-btn>
-          <font-awesome-icon icon="sign-in-alt" class="small" />LOGIN</v-btn
-        > -->
+      </v-toolbar-items>
+
+      <v-toolbar-items v-if="user">
+        <v-btn @click.prevent="logout">
+          <span>
+            <font-awesome-icon icon="sign-in-alt" class="small" />logout</span
+          ></v-btn
+        >
       </v-toolbar-items>
     </v-app-bar>
 
@@ -37,7 +38,14 @@ export default {
   data() {
     return {
       drawer: false,
+      user: this.$store.state.events.initialState.status.loggedIn,
     };
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("events/logout");
+      this.$router.push("/login");
+    },
   },
 };
 </script>
