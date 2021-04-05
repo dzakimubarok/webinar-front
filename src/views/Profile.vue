@@ -1,6 +1,8 @@
 <template>
   <div class="Profile">
-    <TopNavbar />
+    <v-app>
+      <TopNavbar />
+    </v-app>
   </div>
 </template>
  
